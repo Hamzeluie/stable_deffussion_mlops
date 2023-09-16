@@ -1,6 +1,6 @@
 stages:
-  run_train:
-    cmd: 
+  train:
+    cmd: python 
       /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/General_Generative_Defect/multi_subject_SD/run_train.py
-    outs:
-      /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/General_Generative_Defect/multi_subject_SD/results
+    deps:
+    - General_Generative_Defect/multi_subject_SD/run_train.py
