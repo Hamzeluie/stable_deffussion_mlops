@@ -1,6 +1,10 @@
 stages:
   train:
-    cmd: python 
+    cmd: train.resolution, train.train_batch_size, train.max_train_steps, 
+      train.checkpointing_steps,train.trained_model_path,train.num_train_epochs,train.sample_batch_size,train.instance_data_dir,train.instance_prompt,train.checkpoint_path
+      -d 
       /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/General_Generative_Defect/multi_subject_SD/run_train.py
-    deps:
-    - General_Generative_Defect/multi_subject_SD/run_train.py
+      python 
+      /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/General_Generative_Defect/multi_subject_SD/run_train.py
+    params:
+    - train.pretrained_model_name_or_path
