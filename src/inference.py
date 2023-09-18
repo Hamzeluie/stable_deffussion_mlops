@@ -2,7 +2,7 @@ from pathlib import Path
 import sys
 path_root = Path(__file__).parents[1]
 sys.path.append(str(path_root))
-sys.path.append("model")
+sys.path.append("model")para
 import gradio as gr
 from model.inference_pipeline import Pipeline
 import yaml

@@ -126,7 +126,7 @@ if __name__ == "__main__":
     os.makedirs(trained_model_path, exist_ok=True)
     params["trained_model_path"] = trained_model_path
     
-    checkpoint_path = os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"], params["dataset_name"] + ".ckpt")
+    checkpoint_path = os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"].split("/")[0], params["dataset_name"] + ".ckpt")
     params["checkpoint_path"] = checkpoint_path
     
     trainObject  = TrainMultiSubjectSD()
@@ -135,3 +135,4 @@ if __name__ == "__main__":
     # train model
     
     trainObject.train(data)
+    os.rmdir(os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"]))
