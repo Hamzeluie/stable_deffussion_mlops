@@ -1,0 +1,57 @@
+schema: '2.0'
+stages:
+  resize:
+    cmd: python src/resize.py "params.yaml"
+    deps:
+    - path: data/scratch_cv
+      hash: md5
+      md5: 5ae856bed2cb306c7b44f62851b33a1d.dir
+      size: 83421257
+      nfiles: 2160
+    - path: src/resize.py
+      hash: md5
+      md5: 7264b751433ef3bcd05a52f59e9504be
+      size: 500
+    params:
+      params.yaml:
+        resize.img_type: jpg
+        resize.input_dir: data/scratch_cv
+        resize.output_dir: data/resized
+        resize.size: 128
+    outs:
+    - path: data/resized
+      hash: md5
+      md5: e65d3aa895a8ffa0afa2a3598d32ee59.dir
+      size: 10955093
+      nfiles: 2160
+  train:
+    cmd: python src/train.py params.yaml
+    deps:
+    - path: data/resized
+      hash: md5
+      md5: e65d3aa895a8ffa0afa2a3598d32ee59.dir
+      size: 10955093
+      nfiles: 2160
+    - path: src/train.py
+      hash: md5
+      md5: ff04cf374e02d162c22508864e44c9cc
+      size: 6673
+    params:
+      params.yaml:
+        train.checkpointing_steps: 1
+        train.dataset_name: scratch
+        train.instance_data_dir: data/resize
+        train.instance_prompt: 'a photo of a #org@scratch@defect#'
+        train.max_train_steps: 1
+        train.num_train_epochs: 1
+        train.pretrained_model_name_or_path: runwayml/stable-diffusion-v1-5
+        train.resolution: 128
+        train.sample_batch_size: 6
+        train.train_batch_size: 1
+        train.trained_model_path: results
+    outs:
+    - path: results/scratch
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0

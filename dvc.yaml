@@ -1,11 +1,32 @@
 stages:
   resize:
-    cmd: python /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/resize.py /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/data/scratch_cv
+    cmd: python src/resize.py "params.yaml"
     deps:
     - data/scratch_cv
-    - resize.py
+    - src/resize.py
     params:
     - resize.img_type
+    - resize.input_dir
+    - resize.output_dir
     - resize.size
     outs:
-    - data/resize
+    - data/resized
+  train:
+    cmd: python src/train.py params.yaml
+    deps:
+    - data/resized
+    - src/train.py
+    params:
+    - train.checkpointing_steps
+    - train.dataset_name
+    - train.instance_data_dir
+    - train.instance_prompt
+    - train.max_train_steps
+    - train.num_train_epochs
+    - train.pretrained_model_name_or_path
+    - train.resolution
+    - train.sample_batch_size
+    - train.train_batch_size
+    - train.trained_model_path
+    outs:
+    - results/scratch
