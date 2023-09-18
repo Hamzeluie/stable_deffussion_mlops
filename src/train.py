@@ -6,7 +6,7 @@ sys.path.append("model")
 from model.stable_deffussion_mlops import TrainMultiSubjectSD
 import os
 import yaml
-import warnings
+import shutil
 
 
 def setParameters(params):
@@ -134,5 +134,5 @@ if __name__ == "__main__":
     data = setParameters(params)
     # train model
     
-    trainObject.train(data)
-    os.rmdir(os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"]))
+    # trainObject.train(data)
+    shutil.rmtree(os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"]))
