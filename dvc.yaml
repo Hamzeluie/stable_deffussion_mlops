@@ -29,7 +29,7 @@ stages:
     - train.train_batch_size
     - train.trained_model_path
     outs:
-    - results/scratch.ckpt
+    - results/scratch
   inference:
     cmd: python src/inference.py params.yaml
     deps:

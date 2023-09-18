@@ -17,6 +17,6 @@ train:
     trained_model_path: "results"
     dataset_name: "scratch"
 inference:
-    input_checkpoint_path: "results/scratch.ckpt"
-    output_checkpoint_path: "results/scratch"
+    input_checkpoint_path: "results/scratch/scratch.ckpt"
+    output_checkpoint_path: "results/scratch/trained_model"
     

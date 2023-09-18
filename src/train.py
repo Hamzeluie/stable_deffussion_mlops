@@ -119,14 +119,15 @@ def setParameters(params):
 if __name__ == "__main__":
     
     
-    param_yaml_file = sys.argv[1]
+    param_yaml_file = "/home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/params.yaml" #sys.argv[1]
     params = yaml.safe_load(open(param_yaml_file))["train"]
     
-    trained_model_path = os.path.join(params["trained_model_path"], params["dataset_name"])
+    trained_model_path = os.path.join(Path(__file__).parents[1].as_posix(),
+                                      params["trained_model_path"],
+                                      params["dataset_name"], "trained_model")
+    checkpoint_path = os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"], params["dataset_name"], params["dataset_name"] + ".ckpt")
     os.makedirs(trained_model_path, exist_ok=True)
     params["trained_model_path"] = trained_model_path
-    
-    checkpoint_path = os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"].split("/")[0], params["dataset_name"] + ".ckpt")
     params["checkpoint_path"] = checkpoint_path
     
     trainObject  = TrainMultiSubjectSD()
@@ -134,5 +135,5 @@ if __name__ == "__main__":
     data = setParameters(params)
     # train model
     
-    # trainObject.train(data)
-    shutil.rmtree(os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"]))
+    trainObject.train(data)
+    shutil.rmtree(trained_model_path)
