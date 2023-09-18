@@ -1,18 +1,11 @@
 stages:
-  train:
-    cmd: python 
-      /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/General_Generative_Defect/multi_subject_SD/run_train.py
+  resize:
+    cmd: python /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/resize.py /home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/data/scratch_cv
     deps:
-    - General_Generative_Defect/multi_subject_SD/run_train.py
+    - data/scratch_cv
+    - resize.py
     params:
-    - train.checkpoint_path
-    - train.checkpointing_steps
-    - train.instance_data_dir
-    - train.instance_prompt
-    - train.max_train_steps
-    - train.num_train_epochs
-    - train.pretrained_model_name_or_path
-    - train.resolution
-    - train.sample_batch_size
-    - train.train_batch_size
-    - train.trained_model_path
+    - resize.img_type
+    - resize.size
+    outs:
+    - data/resize
