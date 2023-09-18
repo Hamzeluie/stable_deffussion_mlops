@@ -34,15 +34,15 @@ stages:
       nfiles: 2160
     - path: src/train.py
       hash: md5
-      md5: ff04cf374e02d162c22508864e44c9cc
-      size: 6673
+      md5: 89f8d2674c87c4f7826f24de2729afcd
+      size: 6746
     params:
       params.yaml:
-        train.checkpointing_steps: 1
+        train.checkpointing_steps: 1000
         train.dataset_name: scratch
-        train.instance_data_dir: data/resize
+        train.instance_data_dir: data/resized
         train.instance_prompt: 'a photo of a #org@scratch@defect#'
-        train.max_train_steps: 1
+        train.max_train_steps: 1000
         train.num_train_epochs: 1
         train.pretrained_model_name_or_path: runwayml/stable-diffusion-v1-5
         train.resolution: 128
@@ -52,6 +52,6 @@ stages:
     outs:
     - path: results/scratch
       hash: md5
-      md5: d751713988987e9331980363e24189ce.dir
-      size: 0
-      nfiles: 0
+      md5: 37f049b976843fd0336f094212faa0d1.dir
+      size: 20063606684
+      nfiles: 23

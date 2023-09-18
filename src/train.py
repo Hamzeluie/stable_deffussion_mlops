@@ -121,10 +121,13 @@ if __name__ == "__main__":
     
     param_yaml_file = sys.argv[1]
     params = yaml.safe_load(open(param_yaml_file))["train"]
+    
     trained_model_path = os.path.join(params["trained_model_path"], params["dataset_name"])
     os.makedirs(trained_model_path, exist_ok=True)
     params["trained_model_path"] = trained_model_path
-    params["checkpoint_path"] = os.path.join(params["trained_model_path"], params["dataset_name"] + ".ckpt")
+    
+    checkpoint_path = os.path.join(Path(__file__).parents[1].as_posix(), params["trained_model_path"], params["dataset_name"] + ".ckpt")
+    params["checkpoint_path"] = checkpoint_path
     
     trainObject  = TrainMultiSubjectSD()
     # Set parameters
