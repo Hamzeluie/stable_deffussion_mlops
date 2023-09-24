@@ -1,6 +1,6 @@
 outs:
-- md5: 5ae856bed2cb306c7b44f62851b33a1d.dir
-  size: 83421257
-  nfiles: 2160
+- md5: 7e08e5415ac4c34ba5c413db27ad6735.dir
+  size: 26686418
+  nfiles: 23
   hash: md5
   path: scratch_cv
