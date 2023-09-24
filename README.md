@@ -246,4 +246,4 @@ you can watch pipeline by
 
         dvc dag
 
-After changing parameters. if it need . you should **dvc repro** again.
+After changing parameters. if it need . you should **dvc repro** again
