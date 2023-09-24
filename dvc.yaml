@@ -39,5 +39,4 @@ stages:
     - inference.input_checkpoint_path
     - inference.output_checkpoint_path
     outs:
-    - results/scratch/trained_model
-ize
+    - results/scratch/trained_mode
