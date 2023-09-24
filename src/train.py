@@ -3,7 +3,7 @@ import sys
 path_root = Path(__file__).parents[1]
 sys.path.append(str(path_root))
 sys.path.append("model")
-from model.stable_deffussion_mlops import TrainMultiSubjectSD
+from models.stable_deffussion_mlops import TrainMultiSubjectSD
 import os
 import yaml
 import shutil
@@ -119,7 +119,7 @@ def setParameters(params):
 if __name__ == "__main__":
     
     
-    param_yaml_file = "/home/rteam1/Downloads/sd_dvc/stable_deffussion_mlops/params.yaml" #sys.argv[1]
+    param_yaml_file = sys.argv[1]
     params = yaml.safe_load(open(param_yaml_file))["train"]
     
     trained_model_path = os.path.join(Path(__file__).parents[1].as_posix(),

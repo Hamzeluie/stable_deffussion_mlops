@@ -34,8 +34,8 @@ stages:
       nfiles: 2160
     - path: src/train.py
       hash: md5
-      md5: 89f8d2674c87c4f7826f24de2729afcd
-      size: 6746
+      md5: 3ddb725b68e77875d1511335649654f0
+      size: 6932
     params:
       params.yaml:
         train.checkpointing_steps: 1000
@@ -50,8 +50,28 @@ stages:
         train.train_batch_size: 1
         train.trained_model_path: results
     outs:
-    - path: results/scratch
+    - path: results/scratch/scratch.ckpt
       hash: md5
-      md5: 37f049b976843fd0336f094212faa0d1.dir
-      size: 20063606684
-      nfiles: 23
+      md5: 6c0c1a140dd5c55979a2e2eec9aae406
+      size: 4265327662
+  inference:
+    cmd: python src/inference.py params.yaml
+    deps:
+    - path: results/scratch/scratch.ckpt
+      hash: md5
+      md5: 6c0c1a140dd5c55979a2e2eec9aae406
+      size: 4265327662
+    - path: src/inference.py
+      hash: md5
+      md5: 07de00c7c52373df29c9095a76b8c0ae
+      size: 2284
+    params:
+      params.yaml:
+        inference.input_checkpoint_path: results/scratch/scratch.ckpt
+        inference.output_checkpoint_path: results/scratch/trained_model
+    outs:
+    - path: results/scratch/trained_model
+      hash: md5
+      md5: b7b5795071293c04f369be994e9c4754.dir
+      size: 5483045390
+      nfiles: 15

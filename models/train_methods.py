@@ -29,7 +29,7 @@ from diffusers import AutoencoderKL, DDPMScheduler, DiffusionPipeline, UNet2DCon
 from diffusers.optimization import get_scheduler
 from diffusers.utils import check_min_version
 from diffusers.utils.import_utils import is_xformers_available
-from model.convert import convert
+from models.convert import convert
 
 
 # Will error if the minimal version of diffusers is not installed. Remove at your own risks.

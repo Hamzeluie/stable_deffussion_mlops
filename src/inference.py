@@ -5,7 +5,7 @@ path_root = Path(__file__).parents[1]
 sys.path.append(str(path_root))
 sys.path.append("model")
 import gradio as gr
-from model.inference_pipeline import Pipeline
+from models.inference_pipeline import Pipeline
 import yaml
 
 
