@@ -40,4 +40,3 @@ stages:
     - inference.output_checkpoint_path
     outs:
     - results/scratch/trained_model
-ize
