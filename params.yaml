@@ -3,7 +3,6 @@ resize:
     output_dir: "data/resized"
     size: 128
     img_type: "jpg"
-
 train:
     pretrained_model_name_or_path: "runwayml/stable-diffusion-v1-5"
     resolution: 128

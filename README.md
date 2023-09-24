@@ -94,7 +94,7 @@ make new directory with name of data to put your data on it
 
 rename directory of <project_slug> to model to put your model files in it
 
-                mv /path/to/<project_slug>/<project_slug> /path/to/<project_slug>/models
+        mv /path/to/<project_slug>/<project_slug> /path/to/<project_slug>/models
 
 make new directory results to outputs in this directory
 
@@ -151,3 +151,99 @@ put last part of path in remote add
 now dvc push to upload data to googleDrive
 
         dvc push
+
+now lets imagine your image directory is removed or .dvc/cache is removed.you can just have your data with (but rememmber *data/images.dvc* should not be removed)
+
+        dvc pull
+
+# DVC data pipeline
+DVC allow you to better organize projects and reproduce complete workflows and results.
+to defining each *stage* of this workflow you should use:**"dvc stage add"**
+
+**dvc stage parameters:**
+
+dvc stage add
+* -n stage name
+* -p stage dependency or parameters
+* -d stage input files
+* -o stage output file or directory
+
+
+in out example there is 3 stage
+* resize
+* train
+* inference
+
+in **resize** step .we resize raw images to train.it could be any preproccess step.
+Lets define this stage
+
+        dvc stage add   -n resize \ 
+                        -d  data/scratch_cv \ 
+                        -d src/resize.py \ 
+                        -p resize.img_type,\
+                        resize.input_dir,\
+                        resize.output_dir,\
+                        resize.size \ 
+                        -o data/resized \ 
+                        python src/resize.py params.yaml
+
+with running this command you can check root directory there is a file with name **"dvc.yaml"** which contain some information about the stage.in addition you should make a file **params.yaml** in root directory to read stages parameter values from that. for examlpe resize stage 
+
+        resize:
+                input_dir: "data/scratch_cv"
+                output_dir: "data/resized"
+                size: 128
+                img_type: "jpg"
+Now lets define train stage
+
+        dvc stage add -n train \ 
+                      -d data/resized \ 
+                      -d src/train.py \ 
+                      -p train.checkpointing_steps,\
+                      train.dataset_name,\
+                      train.instance_data_dir,\
+                      train.instance_prompt,\
+                      train.max_train_steps,\
+                      train.num_train_epochs,\
+                      train.pretrained_model_name_or_path,\
+                      train.resolution,\
+                      train.sample_batch_size,\
+                      train.train_batch_size,\
+                      train.trained_model_path \ 
+                      -o results/scratch/scratch.ckpt 
+                      python src/train.py params.yaml
+
+***dvc.yaml*** will update after running the command.
+also you should define train parameters in **param.yaml**.
+
+last stage is inference
+
+        dvc stage add -n inference
+                      -d results/scratch/scratch.ckpt
+                      -d src/inference.py
+                      -p  inference.input_checkpoint_path,\
+                      inference.output_checkpoint_path \
+                      -o results/scratch/trained_model \
+                      python src/inference.py params.yaml
+
+like preview step ***dvc.yaml*** will change in this step and inference stage parameters should be define by you in **params.yaml** 
+
+
+Now git add
+
+        git add .gitignore data/.gitignore dvc.yaml
+        git commit -m "pipline defined"
+
+its time to reproducing pipeline
+
+        dvc repro
+
+after reproducing.you should commit dvc.lock
+
+        git add dvc.lock && git commit -m "first pipeline repro"
+
+you can watch pipeline by 
+
+        dvc dag
+
+After changing parameters. if it need . you should **dvc repro** again

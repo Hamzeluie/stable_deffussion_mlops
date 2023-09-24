@@ -1,6 +1,6 @@
 stages:
   resize:
-    cmd: python src/resize.py "params.yaml"
+    cmd: python src/resize.py params.yaml
     deps:
     - data/scratch_cv
     - src/resize.py
