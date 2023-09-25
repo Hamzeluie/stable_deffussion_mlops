@@ -164,8 +164,6 @@ now let's imagine your image directory is removed or .dvc/cache is removed. You 
 
 DVC allow you to better organize projects and reproduce complete workflows and results.
 
-DVC allows you to better organize projects and reproduce complete workflows and results.
-
 to defining each *stage* of this workflow you should use:**"dvc stage add"**
 
 **dvc stage parameters:**
@@ -265,17 +263,3 @@ you can watch pipeline by
         dvc dag
 
 After changing parameters. if it need . you should **dvc repro** again
-
-It is time to reproduce pipeline
-
-        dvc repro
-
-after reproducing. you should commit dvc.lock
-
-        git add dvc.lock && git commit -m "first pipeline repro"
-
-you can watch Pipeline by 
-
-        dvc dag
-
-After changing parameters. if it need. you should **dvc repro** again
