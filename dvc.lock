@@ -1,41 +1,41 @@
 schema: '2.0'
 stages:
   resize:
-    cmd: python src/resize.py "params.yaml"
+    cmd: python src/resize.py params.yaml
     deps:
     - path: data/scratch_cv
       hash: md5
-      md5: 5ae856bed2cb306c7b44f62851b33a1d.dir
-      size: 83421257
-      nfiles: 2160
+      md5: 7e08e5415ac4c34ba5c413db27ad6735.dir
+      size: 26686418
+      nfiles: 23
     - path: src/resize.py
       hash: md5
       md5: 7264b751433ef3bcd05a52f59e9504be
       size: 500
     params:
       params.yaml:
-        resize.img_type: jpg
+        resize.img_type: png
         resize.input_dir: data/scratch_cv
         resize.output_dir: data/resized
         resize.size: 128
     outs:
     - path: data/resized
       hash: md5
-      md5: e65d3aa895a8ffa0afa2a3598d32ee59.dir
-      size: 10955093
-      nfiles: 2160
+      md5: f38d5b2740afdc4f2bff9bffe0ae7e22.dir
+      size: 605914
+      nfiles: 23
   train:
     cmd: python src/train.py params.yaml
     deps:
     - path: data/resized
       hash: md5
-      md5: e65d3aa895a8ffa0afa2a3598d32ee59.dir
-      size: 10955093
-      nfiles: 2160
+      md5: f38d5b2740afdc4f2bff9bffe0ae7e22.dir
+      size: 605914
+      nfiles: 23
     - path: src/train.py
       hash: md5
-      md5: 3ddb725b68e77875d1511335649654f0
-      size: 6932
+      md5: 374e2833de807b002132be6c54ba37e8
+      size: 6933
     params:
       params.yaml:
         train.checkpointing_steps: 1000
@@ -46,32 +46,11 @@ stages:
         train.num_train_epochs: 1
         train.pretrained_model_name_or_path: runwayml/stable-diffusion-v1-5
         train.resolution: 128
-        train.sample_batch_size: 6
+        train.sample_batch_size: 2
         train.train_batch_size: 1
         train.trained_model_path: results
     outs:
     - path: results/scratch/scratch.ckpt
       hash: md5
-      md5: 6c0c1a140dd5c55979a2e2eec9aae406
+      md5: 136f1ab184c0c6dd40e15c980516d29d
       size: 4265327662
-  inference:
-    cmd: python src/inference.py params.yaml
-    deps:
-    - path: results/scratch/scratch.ckpt
-      hash: md5
-      md5: 6c0c1a140dd5c55979a2e2eec9aae406
-      size: 4265327662
-    - path: src/inference.py
-      hash: md5
-      md5: 07de00c7c52373df29c9095a76b8c0ae
-      size: 2284
-    params:
-      params.yaml:
-        inference.input_checkpoint_path: results/scratch/scratch.ckpt
-        inference.output_checkpoint_path: results/scratch/trained_model
-    outs:
-    - path: results/scratch/trained_model
-      hash: md5
-      md5: b7b5795071293c04f369be994e9c4754.dir
-      size: 5483045390
-      nfiles: 15
