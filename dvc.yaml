@@ -30,13 +30,3 @@ stages:
     - train.trained_model_path
     outs:
     - results/scratch/scratch.ckpt
-  inference:
-    cmd: python src/inference.py params.yaml
-    deps:
-    - results/scratch/scratch.ckpt
-    - src/inference.py
-    params:
-    - inference.input_checkpoint_path
-    - inference.output_checkpoint_path
-    outs:
-    - results/scratch/trained_mode

@@ -2,7 +2,7 @@ resize:
     input_dir: "data/scratch_cv"
     output_dir: "data/resized"
     size: 128
-    img_type: "jpg"
+    img_type: "png"
 train:
     pretrained_model_name_or_path: "runwayml/stable-diffusion-v1-5"
     resolution: 128
@@ -10,7 +10,7 @@ train:
     max_train_steps: 1000
     checkpointing_steps: 1000
     num_train_epochs: 1
-    sample_batch_size: 6
+    sample_batch_size: 2
     instance_prompt: "a photo of a #org@scratch@defect#"
     instance_data_dir: "data/resized"
     trained_model_path: "results"
