@@ -15,7 +15,7 @@ train:
     instance_data_dir: "data/resized"
     trained_model_path: "results"
     dataset_name: "scratch"
-inference:
+app:
     input_checkpoint_path: "results/scratch/scratch.ckpt"
     output_checkpoint_path: "results/scratch/trained_model"
     

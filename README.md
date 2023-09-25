@@ -232,13 +232,13 @@ also, you should define train parameters in **param.yaml**.
 
 the last stage is the inference
 
-        dvc stage add -n inference
+        dvc stage add -n app
                       -d results/scratch/scratch.ckpt
-                      -d src/inference.py
-                      -p  inference.input_checkpoint_path,\
-                      inference.output_checkpoint_path \
+                      -d src/app.py
+                      -p  app.input_checkpoint_path,\
+                      app.output_checkpoint_path \
                       -o results/scratch/trained_model \
-                      python src/inference.py params.yaml
+                      python src/app.py params.yaml
 
 like preview step ***dvc.yaml*** will change in this step and inference stage parameters should be define by you in **params.yaml** 
 
