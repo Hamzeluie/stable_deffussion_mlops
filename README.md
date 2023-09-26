@@ -148,6 +148,15 @@ put last part of the path in remote add
 
         dvc remote add -d <remote_name> gdrive://14BN_D1HWKFw0POOJHPf5HqjW1bZayNCC
 
+or add remote to your custom SSH server.
+* first install package
+* add remote 
+* set ask_password true if SSH wants password
+        
+        pip install 'dvc[ssh_gssapi]'
+        dvc remote add -d <remote_name> ssh://<user>@<ip>:<port>/path   
+        dvc remote modify <remote_name> ask_password true     
+
 now dvc push to upload data to googleDrive
 
         dvc push
