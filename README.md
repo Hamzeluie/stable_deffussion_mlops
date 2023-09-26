@@ -173,8 +173,6 @@ now let's imagine your image directory is removed or .dvc/cache is removed. You 
 
 DVC allow you to better organize projects and reproduce complete workflows and results.
 
-DVC allows you to better organize projects and reproduce complete workflows and results.
-
 to defining each *stage* of this workflow you should use:**"dvc stage add"**
 
 **dvc stage parameters:**
@@ -243,13 +241,13 @@ also, you should define train parameters in **param.yaml**.
 
 the last stage is the inference
 
-        dvc stage add -n inference
+        dvc stage add -n app
                       -d results/scratch/scratch.ckpt
-                      -d src/inference.py
-                      -p  inference.input_checkpoint_path,\
-                      inference.output_checkpoint_path \
+                      -d src/app.py
+                      -p  app.input_checkpoint_path,\
+                      app.output_checkpoint_path \
                       -o results/scratch/trained_model \
-                      python src/inference.py params.yaml
+                      python src/app.py params.yaml
 
 like preview step ***dvc.yaml*** will change in this step and inference stage parameters should be define by you in **params.yaml** 
 
@@ -274,17 +272,3 @@ you can watch pipeline by
         dvc dag
 
 After changing parameters. if it need . you should **dvc repro** again
-
-It is time to reproduce pipeline
-
-        dvc repro
-
-after reproducing. you should commit dvc.lock
-
-        git add dvc.lock && git commit -m "first pipeline repro"
-
-you can watch Pipeline by 
-
-        dvc dag
-
-After changing parameters. if it need. you should **dvc repro** again
