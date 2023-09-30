@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import subprocess
 import sys
 path_root = Path(__file__).parents[1]
 sys.path.append(str(path_root))
@@ -20,12 +21,35 @@ os.makedirs(converted_path, exist_ok=True)
 
 pipeline = Pipeline(weight_path=weight_path, converted_path=converted_path)
 
+def write_config(cof_dict):
+    cofig = os.path.join(converted_path, "config.yaml")
+    with open(cofig, 'w') as file:
+        yaml.dump(cof_dict, file)
+    file.close()
+    
+    
 def defect_generate(prompt, dict, padding, blur_len, strength_slider, CFG_Scale_slider, transparency, num_inference_steps):
     init_img =  dict['image'].convert("RGB")
     mask_img = dict['mask'].convert("RGB")
     # image = generator.generate(prompt)
     image = pipeline.generate(prompt,init_img,mask_img, padding, blur_len, strength_slider, CFG_Scale_slider, transparency=transparency, num_inference_steps=num_inference_steps)
+    write_config(cof_dict= {"padding": padding, 
+                "blur_len": blur_len, 
+                "strength_slider": strength_slider,
+                "CFG_Scale_slider": CFG_Scale_slider, 
+                "transparency": transparency, 
+                "num_inference_steps":num_inference_steps})
     return image
+
+
+def grpu_proccess_kill():
+    cmd = "nvidia-smi --query-compute-apps=pid --format=csv,noheader"
+    utilization = subprocess.check_output(cmd, shell=True)
+    utilization = utilization.decode("utf-8").strip().split("\n")
+    utilization = [int(x.replace(" %", "")) for x in utilization]
+    os.system(f"kill -9 {utilization[-1]}")
+    return utilization
+
 css = '''
 #image_upload{min-height:800px}
 #image_upload [data-testid="image"], #image_upload [data-testid="image"] > div{min-height: 800px}
@@ -39,6 +63,7 @@ with gr.Blocks(css=css) as demo:
     with gr.Row():
         prompt = gr.Textbox(label="Prompt", placeholder="prompt..")
         greet_btn = gr.Button("Generate").style(full_width=False)
+        close_btn = gr.Button("close").style(full_width=False)
     with gr.Row():
         strength_slider = gr.Slider(0, 1, 0.75, label="Denoising strength")
         CFG_Scale_slider = gr.Slider(1, 300, 13, label="CFG Scale")
@@ -51,6 +76,6 @@ with gr.Blocks(css=css) as demo:
     output = gr.Image(label="Generated Image")
     
     greet_btn.click(fn=defect_generate, inputs=[prompt, input_img, padding_slider, blur_slider, strength_slider, CFG_Scale_slider, transparency, num_inference_steps], outputs=output, api_name="General Generative Defect", )
-
+    close_btn.click(grpu_proccess_kill)
 
 demo.launch(share=False)
